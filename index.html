@@ -75,25 +75,42 @@
     main {
       padding-top: 90px;
     }
+.hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
+  width: 100%;
+  padding: 20px;
+  overflow: hidden;
+  color: #fff;
+}
 
-    .hero {
-      height: 100vh;
-      background: url('https://images.unsplash.com/photo-1521412644187-c49fa049e84d?auto=format&fit=crop&w=1470&q=80') center/cover fixed;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      color: #fff;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.9));
-    }
+.hero img.bg-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: -1;
+  opacity: 0.8;
+  filter: brightness(0.7);
+  transition: opacity 1s ease-in-out;
+  pointer-events: none;
+  user-select: none;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.7));
+  z-index: -1;
+}
     .hero h2 {
       position: relative;
       font-family: 'Merriweather', serif;
@@ -102,14 +119,18 @@
       transform: translateY(20px);
       animation: fadeInUp 1s ease-out .5s forwards;
     }
-    .hero p {
-      position: relative;
-      font-size: 1.25rem;
-      margin-top: 12px;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeInUp 1s ease-out .8s forwards;
-    }
+  /* Tambahan untuk teks <p> agar menyatu lebih baik */
+.hero p {
+  position: relative;
+  font-size: 1.25rem;
+  margin-top: 12px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 1s ease-out .8s forwards;
+  color: #f5f5f5;
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.5); /* bayangan untuk menonjolkan teks di atas background terang */
+}
+
     .hero .btn {
       position: relative;
       margin-top: 24px;
@@ -178,27 +199,37 @@
       border-radius: 2px;
     }
 
-    .catalog-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      grid-auto-rows: 200px;
-      gap: 16px;
-    }
-    .catalog-grid .large {
-      grid-column: span 2;
-      grid-row: span 2;
-    }
-    .catalog-grid img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 8px;
-      transition: transform .3s, filter .3s;
-    }
-    .catalog-grid img:hover {
-      transform: scale(1.05);
-      filter: brightness(1.1);
-    }
+   .catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* lebih kecil agar responsive */
+  gap: 16px;
+}
+
+.catalog-grid .large {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+
+.catalog-item {
+  aspect-ratio: 1 / 1; /* Bikin kotak 1:1 */
+  overflow: hidden;
+  border-radius: 8px;
+  position: relative;
+}
+
+.catalog-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  transition: transform .3s, filter .3s;
+}
+
+.catalog-item img:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
 
     .recommendations {
       display: flex;
@@ -324,6 +355,7 @@
       .hero p { font-size: 1rem; }
       header nav a { margin: 12px 8px; }
       .filter-panel { display: none; }
+      
     }
   </style>
 </head>
@@ -332,8 +364,9 @@
     <h1>JerseyStore</h1>
     <nav>
       <a href="#home">Home</a>
-      <a href="#catalog">Katalog</a>
+      <a href="#catalog">Desain Produk</a>
       <a href="#rekomendasi">Rekomendasi</a>
+      <a href="#order">Aturan dan ketentuan</a>
       <a href="#testi">Testi</a>
       <a href="#editorial">Story</a>
       <a href="#hubungi">Hubungi</a>
@@ -349,23 +382,65 @@
 
   <main>
     <!-- Hero -->
-    <section id="home" class="hero">
-      <h2>Elite Performance Kit</h2>
-      <p>• Precision Tailored • Dramatic Lighting •</p>
-      <a href="#catalog" class="btn">Explore Katalog</a>
-    </section>
+  <section id="home" class="hero">
+  <img src="img/4.png" alt="Background Hero" class="bg-img">
+  <h2>Elite Performance Kit</h2>
+  <p>• Precision Tailored • Dramatic Lighting •</p>
+  <a href="#catalog" class="btn">Explore Katalog</a>
+</section>
 
     <!-- Katalog -->
     <section id="catalog" class="container">
-      <h2 class="section-title">Katalog Produk</h2>
-      <div class="catalog-grid">
-        <img src="https://i.pinimg.com/736x/68/55/4c/68554cfe5024044a7845148143169ec9.jpg" class="large fade-in">
-        <img src="https://i.pinimg.com/736x/04/e1/29/04e129e0db06c1663731d5d4d66ec231.jpg" class="fade-in">
-        <img src="https://i.pinimg.com/736x/79/3a/62/793a6208ccfbae7057874c7530f16b34.jpg" class="fade-in">
-        <img src="https://via.placeholder.com/600x400" class="large fade-in">
-        <img src="https://via.placeholder.com/300x300" class="fade-in">
-        <img src="https://via.placeholder.com/300x500" class="fade-in">
-      </div>
+      <h2 class="section-title">Desain Produk</h2>
+     <div class="catalog-grid">
+  <div class="catalog-item fade-in"><img src="img/5.jpeg" alt="Jersey 5"></div>
+  <div class="catalog-item fade-in"><img src="img/6.jpeg" alt="Jersey 6"></div>
+  <div class="catalog-item fade-in large"><img src="img/7.jpeg" alt="Jersey 7"></div>
+  <div class="catalog-item fade-in"><img src="img/8.jpeg" alt="Jersey 8"></div>
+  <div class="catalog-item fade-in"><img src="img/9.jpeg" alt="Jersey 9"></div>
+  <div class="catalog-item fade-in"><img src="img/10.jpeg" alt="Jersey 10"></div>
+  <div class="catalog-item fade-in large"><img src="img/11.jpeg" alt="Jersey 11"></div>
+  <div class="catalog-item fade-in"><img src="img/12.jpeg" alt="Jersey 12"></div>
+  <div class="catalog-item fade-in"><img src="img/13.jpeg" alt="Jersey 13"></div>
+  <div class="catalog-item fade-in"><img src="img/14.jpeg" alt="Jersey 14"></div>
+  <div class="catalog-item fade-in large"><img src="img/15.jpeg" alt="Jersey 15"></div>
+  <div class="catalog-item fade-in"><img src="img/16.jpeg" alt="Jersey 16"></div>
+  <div class="catalog-item fade-in"><img src="img/17.jpeg" alt="Jersey 17"></div>
+  <div class="catalog-item fade-in"><img src="img/18.jpeg" alt="Jersey 18"></div>
+  <div class="catalog-item fade-in large"><img src="img/19.jpeg" alt="Jersey 19"></div>
+  <div class="catalog-item fade-in"><img src="img/20.jpeg" alt="Jersey 20"></div>
+  <div class="catalog-item fade-in"><img src="img/21.jpeg" alt="Jersey 21"></div>
+  <div class="catalog-item fade-in"><img src="img/22.jpeg" alt="Jersey 22"></div>
+  <div class="catalog-item fade-in large"><img src="img/23.jpeg" alt="Jersey 23"></div>
+  <div class="catalog-item fade-in"><img src="img/24.jpeg" alt="Jersey 24"></div>
+  <div class="catalog-item fade-in"><img src="img/25.jpeg" alt="Jersey 25"></div>
+  <div class="catalog-item fade-in"><img src="img/26.jpeg" alt="Jersey 26"></div>
+  <div class="catalog-item fade-in large"><img src="img/27.jpeg" alt="Jersey 27"></div>
+  <div class="catalog-item fade-in"><img src="img/28.jpeg" alt="Jersey 28"></div>
+  <div class="catalog-item fade-in"><img src="img/29.jpeg" alt="Jersey 29"></div>
+  <div class="catalog-item fade-in"><img src="img/30.jpeg" alt="Jersey 30"></div>
+  <div class="catalog-item fade-in large"><img src="img/31.jpeg" alt="Jersey 31"></div>
+  <div class="catalog-item fade-in"><img src="img/32.jpeg" alt="Jersey 32"></div>
+  <div class="catalog-item fade-in"><img src="img/33.jpeg" alt="Jersey 33"></div>
+  <div class="catalog-item fade-in"><img src="img/34.jpeg" alt="Jersey 34"></div>
+  <div class="catalog-item fade-in large"><img src="img/35.jpeg" alt="Jersey 35"></div>
+  <div class="catalog-item fade-in"><img src="img/36.jpeg" alt="Jersey 36"></div>
+  <div class="catalog-item fade-in"><img src="img/37.jpeg" alt="Jersey 37"></div>
+  <div class="catalog-item fade-in"><img src="img/38.jpeg" alt="Jersey 38"></div>
+  <div class="catalog-item fade-in large"><img src="img/39.jpeg" alt="Jersey 39"></div>
+  <div class="catalog-item fade-in"><img src="img/40.jpeg" alt="Jersey 40"></div>
+  <div class="catalog-item fade-in"><img src="img/41.jpeg" alt="Jersey 41"></div>
+  <div class="catalog-item fade-in"><img src="img/42.jpeg" alt="Jersey 42"></div>
+  <div class="catalog-item fade-in large"><img src="img/43.jpeg" alt="Jersey 43"></div>
+  <div class="catalog-item fade-in"><img src="img/44.jpeg" alt="Jersey 44"></div>
+  <div class="catalog-item fade-in"><img src="img/45.jpeg" alt="Jersey 45"></div>
+  <div class="catalog-item fade-in"><img src="img/46.jpeg" alt="Jersey 46"></div>
+  <div class="catalog-item fade-in large"><img src="img/47.jpeg" alt="Jersey 47"></div>
+  <div class="catalog-item fade-in"><img src="img/48.jpeg" alt="Jersey 48"></div>
+  <div class="catalog-item fade-in"><img src="img/49.jpeg" alt="Jersey 49"></div>
+  <div class="catalog-item fade-in"><img src="img/50.jpeg" alt="Jersey 50"></div>
+  <div class="catalog-item fade-in large"><img src="img/51.jpeg" alt="Jersey 51"></div>
+</div>
     </section>
 
     <!-- Rekomendasi -->
@@ -387,24 +462,51 @@
       </div>
     </section>
 
-    <!-- Desain -->
-    <section id="desain" class="container">
-      <h3 class="section-title">Desain</h3>
-      <p style="max-width:600px;margin:auto;">
-        Kami menyajikan desain kontemporer dan timeless—tiap garis, tiap warna, dipilih dengan presisi.
-      </p>
-    </section>
-
     <!-- Order -->
-    <section id="order" class="container">
-      <h3 class="section-title">Cara Order</h3>
-      <ol style="max-width:600px;margin:auto;line-height:1.6;">
-        <li>Kirim permintaan desain atau pilih dari koleksi kami.</li>
-        <li>Sertakan ukuran & jumlah, lalu hubungi via WhatsApp.</li>
-        <li>Produksi: 7–10 hari kerja dengan quality control ketat.</li>
-        <li>Pengiriman ke seluruh Indonesia, packing eksklusif.</li>
-      </ol>
-    </section>
+   <section id="order" class="container">
+  <h3 class="section-title">Aturan dan Ketentuan</h3>
+
+  <div style="max-width:700px; margin:auto; line-height:1.8; color:#ddd; font-size:1rem;">
+
+    <h4 style="color:#fdd835; margin-top:1.5em;">Konfirmasi Desain</h4>
+    <ul>
+      <li>Jika desain sudah ada, langsung kirim via email untuk dicek.</li>
+      <li>Jika desain belum ada, kami dapat bantu desain dengan membayar DP (tanda jadi) sebesar <strong>Rp. 100.000</strong> dan melampirkan gambaran atau konsep desain yang diinginkan.</li>
+      <li>Revisi desain maksimal <strong>3x</strong> dan tidak diperbolehkan mengubah keseluruhan konsep desain yang telah disepakati.</li>
+    </ul>
+
+    <h4 style="color:#fdd835; margin-top:1.5em;">Pembayaran</h4>
+    <ul>
+      <li>Jika desain dan data sudah fix, pembayaran (DP) dapat dilakukan dengan minimal <strong>50%</strong> dari total biaya. Potongan uang tanda jadi sebesar <strong>Rp. 100.000</strong> akan dihitung.</li>
+      <li>Pelunasan dilakukan <strong>H-1 sebelum jersey dikirim</strong>.</li>
+      <li><strong>Ongkir ditanggung oleh customer.</strong></li>
+    </ul>
+
+    <h4 style="color:#fdd835; margin-top:1.5em;">Produksi</h4>
+    <ul>
+      <li>Jika desain dan pembayaran sudah lengkap, pesanan akan masuk ke proses produksi.</li>
+      <li>Estimasi waktu produksi <strong>10–14 hari</strong> (tergantung jumlah pesanan).</li>
+      <li>Perlu diketahui: hasil warna kain printing dan kain basic <strong>tidak bisa 100% sama.</strong></li>
+      <li><strong>Produksi susulan</strong> dikenakan biaya tambahan <strong>Rp. 10.000 per baju.</strong></li>
+    </ul>
+
+    <h4 style="color:#fdd835; margin-top:1.5em;">Pengambilan & Pengiriman</h4>
+    <ul>
+      <li><strong>Maksimal pengambilan barang 2 minggu</strong>. Di luar itu, kami tidak bertanggung jawab atas kesalahan atau kerusakan pada barang.</li>
+      <li>Pengiriman dapat disesuaikan dengan permintaan customer.</li>
+      <li>Jika terjadi kerusakan atau kehilangan saat pengiriman, <strong>di luar tanggung jawab kami.</strong></li>
+    </ul>
+
+    <h4 style="color:#fdd835; margin-top:1.5em;">Komplain</h4>
+    <ul>
+      <li>Jika terdapat jersey reject atau kesalahan lainnya, <strong>komplain maksimal 3 hari setelah pengambilan.</strong></li>
+      <li>Jersey reject akan dicetak ulang dengan syarat <strong>jersey dikembalikan terlebih dahulu.</strong></li>
+      <li>Untuk customer luar kota, pengambilan jersey akan dikirim via ekspedisi. <strong>Biaya kirim ditanggung customer.</strong></li>
+    </ul>
+
+  </div>
+</section>
+
 
     <!-- Harga -->
     <section id="harga" class="container">
